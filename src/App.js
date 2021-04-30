@@ -1,63 +1,63 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 // import "./App.css";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import LoginForm from "./LoginForm";
-import RegForm from "./RegForm";
+import FormHolder from "./FormHolder";
+
 import Find from "./Find";
 import Context from "./context";
 
 import Table from "./Table";
+import AddingForm from "./AddingForm";
 
 function App() {
+  const ctx = useContext(Context);
 
   const [logStatus, setLogStatus] = useState(false);
-  const [itemDel, setItemDel] = useState(false);
-
+  const [picturesData, setPictureData] = useState([]);
 
   const changeStatus = () => {
-    setLogStatus(true);
+    setLogStatus(!logStatus);
+    if (logStatus === false) {
+      ctx.isLoggedIn = false;
+    }
     console.log("log status iz appa " + logStatus);
-  }
-
-  const wasDeleted = () => {
-    setItemDel(true);
-  }
+  };
 
   
-
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  // useEffect(() => {
-  //   const storedUserLoggedInInformation = localStorage.getItem("isLoggedIn");
-
-  //   if (storedUserLoggedInInformation === "1") {
-  //     setIsLoggedIn(true);
-  //   }
-  // }, []);
-
-  // const loginHandler = (email, password) => {
-  //   // We should of course check email and password
-  //   // But it's just a dummy/ demo anyways
-  //   localStorage.setItem("isLoggedIn", "1");
-  //   setIsLoggedIn(true);
-  // };
-
-  // const logoutHandler = () => {
-  //   localStorage.removeItem("isLoggedIn");
-  //   setIsLoggedIn(false);
-  // };
+  const sendItems = (items) => {
+    setPictureData(items);
+  };
+  const pictureDataChanged = () => {
+    setPictureData([]);
+  }
+  
 
   return (
-    <Context.Provider value={{ isLoggedIn: logStatus, picturesData: [], delStatus: itemDel }}>
-      <div className="container">
-        <RegForm />
-        <br />
-        <LoginForm changeSt={changeStatus}/>
-        <br />
-        <Find />
-        <Table itemDel={wasDeleted}/>
-      </div>
-    </Context.Provider>
+    <div className="container">
+      {!logStatus && <FormHolder onLogin={changeStatus} />}
+      {logStatus && (
+        <div className="text-center">
+          <p>Current user: <b>{ctx.user}</b></p>
+        </div>
+      )}
+      {logStatus && (
+        <div className="text-center">
+          <button onClick={changeStatus} className="btn btn-secondary">
+            Logout
+          </button>
+        </div>
+      )}
+      <br />
+      <Context.Provider
+        value={{ isLoggedIn: logStatus, picturesData: []}}
+      >
+        {logStatus && <Find foundItems={sendItems} />}
+
+        <Table itemsToDisplay={picturesData} itemIsDeleted={pictureDataChanged}/>
+      </Context.Provider>
+      <br />
+      {logStatus && <AddingForm newPicture={pictureDataChanged}/> }
+    </div>
   );
 }
 

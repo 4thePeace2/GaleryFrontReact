@@ -7,9 +7,6 @@ import Context from "./context";
 
 const PictureList = (props) => {
   const ctx = useContext(Context);
-  const test = () => {
-    props.listChange();
-  }
 
 
   const removePictureHandler = async (OrgId) => {
@@ -29,18 +26,20 @@ const PictureList = (props) => {
     const data = await response;
     
     console.log(data);
-    test();
+    if (data.status === 204) {
+      props.itemWasDeleted();
+    }
     
   }
   return (
     <React.Fragment>
       {props.pictures.map((item) => (
         <tr key={item.Id}>
-          <td>{item.Name}</td>
-          <td>{item.Author}</td>
-          <td>{item.Price}</td>
-          <td>{item.GaleryName}</td>
-          {props.logStatus === true && <td><button onClick={removePictureHandler.bind(null, item.OrgId)} type="button" className="btn btn-outline-secondary">obrisi</button></td>}
+          <td className="table-secondary">{item.Name}</td>
+          <td className="table-secondary">{item.Author}</td>
+          <td className="table-secondary">{item.Price}</td>
+          <td className="table-secondary">{item.GaleryName}</td>
+          {props.logStatus === true && <td className="table-secondary"><button onClick={removePictureHandler.bind(null, item.OrgId)} type="button" className="btn btn-outline-secondary">delete</button></td>}
         </tr>
       ))}
     </React.Fragment>

@@ -24,7 +24,6 @@ const RegForm = (props) => {
       {
         method: "POST",
         headers: {
-          // 'Accept': "application/json",
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data1),
@@ -33,10 +32,9 @@ const RegForm = (props) => {
     const data = await response;
     console.log(data.status);
     if (data.status === 200) {
-      alert("usepesno ste se registrovali!");
+      alert("Registration was successful!");
+      props.isCanceled();
     }
-    // setEnteredEmail("");
-    // setEnteredPassword("");
   }
 
   const submitHandler = (event) => {
@@ -57,34 +55,43 @@ const RegForm = (props) => {
     registrationFunc(sendData);
   };
 
+  const cancelReg = () => {
+    props.isCanceled();
+  }
+
   return (
     <div>
       <form className="form-group" onSubmit={submitHandler}>
-        <label htmlFor="email">Email</label>
+        <label className="col-sm-3" htmlFor="email">Email</label>
         <input
-          className="form-control"
+          className="col-sm-3 bg-transparent"
           type="email"
           id="email"
           value={enteredEmail}
           onChange={emailChangeHandler}
         />
-        <label htmlFor="password">Password</label>
+        <br />
+        <label className="col-sm-3" htmlFor="password">Password</label>
         <input
-          className="form-control"
+          className="col-sm-3 bg-transparent"
           type="password"
-          id="password"
+          id="password1"
           value={enteredPassword}
           onChange={passwordChangeHandler}
         />
-        <label htmlFor="password">Confirm password</label>
+        <br />
+        <label className="col-sm-3 bg-transparent" htmlFor="password">Confirm password</label>
         <input
-          className="form-control"
+          className="col-sm-3"
           type="password"
-          id="password"
+          id="password2"
           value={confirmPassword}
           onChange={confirmPasswordChangeHandler}
         />
-        <button className="btn btn-success">Submit</button>
+        <br />
+        <button type="submit" className="btn btn-info mr-5">Submit</button>
+        <button type="button" onClick={cancelReg} className="btn btn-danger mr-5">Cancel</button>
+
       </form>
     </div>
   );

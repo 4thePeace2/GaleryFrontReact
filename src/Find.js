@@ -15,7 +15,6 @@ const Find = (props) => {
   const maxChangeHandler = (event) => {
     setMaximum(event.target.value);
   };
-  // var token = "BrH_XG9Ykk2KNvQTILhedK7x3hz0TTTxZkJqy7L447sGjqFj8HYs5ByevEfmPuO9I0fxMCsPC17kiqi8ZFH4zRikPnJNMKslyZSBSnB_P6C6BJAdJOTJuxkIFTm_n7rFQuoeIc07V42rkadOA2-ySS8hyL1lj3vwHx_HkuQOzfYF2i2l9AbOsboqHgIXNQZYwT4pn3EtEbQQrC1lkbWG1Mpv9_OYre6O2M5dhDQwj-EbFxEsFTMlF_enVV_1ytreb5a2s40zkffrWKY5FnEXQbC7J_X2Y-QaAuMjDpDsmt8M0xEB5-m1DXTTrcAzDiBvsnpGPY2QMa7IhwPOuL8dZAUO8Uj_-mQbrGc5FXAw7VTjPR7vfcXHpb7tQwfhISzl7UhMMCwLhfpk3ILM9YtC5MOVORvYSBzIHc73NZKhc2RN77JYk8BCpbDHIc4192UDJ_-IKsItXlFWHLkWVQ6Gnf2c1LwUf_6nViOgG_aiUug";
   
   const sendValues = async (valMin, valMax) => {
     ctx.token = localStorage.getItem("token");
@@ -25,13 +24,18 @@ const Find = (props) => {
           method: "POST",
           headers: {
             'Accept': "application/json",
-            'Authorization': "Bearer " + ctx.token
-            // "Content-Type": "application/json",
+            'Authorization': "Bearer " + ctx.token,
           }
         }
       );
       const data = await response.json();
       console.log(data);
+      if (data.length > 0) {
+        props.foundItems(data);
+      } else {
+        alert("No data was found!");
+      }
+      
   }
 
   const submitHandler = (event) => {
@@ -47,31 +51,34 @@ const Find = (props) => {
   };
 
   return (
-    <div className="col-sm-6">
-      <label className="col-sm-6" htmlFor="min">
+    <div className="text-center">
+      <h3>Search by price</h3>
+      <label className="col-sm-2" htmlFor="min">
         Minimum
       </label>
       <input
-        // className="form-control"
-        className="col-sm-6"
+        className="col-sm-2 bg-transparent"
         type="number"
         id="min"
+        step="0.01"
         value={minimum}
         onChange={minChangeHandler}
       />
-      <label className="col-sm-6" htmlFor="min">
+      <br />
+      <label className="col-sm-2" htmlFor="min">
         Maksimum
       </label>
       <input
-        // className="form-control"
-        className="col-sm-6"
+        className="col-sm-2 bg-transparent"
         type="number"
         id="max"
+        step="0.01"
         value={maximum}
         onChange={maxChangeHandler}
       />
       <div  className="text-center">
-        <button type="button" onClick={submitHandler} className="btn btn-success col-sm-4">Find</button>
+        <br />
+        <button type="button" onClick={submitHandler} className="btn btn-success col-sm-1">Find</button>
       </div>
     </div>
   );

@@ -4,7 +4,7 @@ const Context = React.createContext({
     isLoggedIn: false,
     token: "",
     picturesData: [],
-    delStatus: false
+    user: "",
 });
 
 export default Context;
