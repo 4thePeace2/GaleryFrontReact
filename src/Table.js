@@ -5,11 +5,15 @@ import PictureList from "./PictureList";
 import Context from "./context";
 
 
-const Table = () => {
+const Table = (props) => {
   const [pictures, setPictures] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const ctx = useContext(Context);
+
+  const wasChanged = () => {
+    props.itemDel();
+  }
 
   const fetchPicturesHandler = useCallback(async () => {
     setIsLoading(true);
@@ -28,6 +32,7 @@ const Table = () => {
       for (const key in data) {
         loadedPictures.push({
           Id: key,
+          OrgId: data[key].Id,
           Name: data[key].Name,
           Author: data[key].Author,
           Price: data[key].Price,
@@ -60,7 +65,7 @@ const Table = () => {
           </tr>
         </thead>
         <tbody>
-          <PictureList pictures={pictures} logStatus={ctx.isLoggedIn} />
+          <PictureList pictures={pictures} logStatus={ctx.isLoggedIn} listChange={wasChanged}/>
         </tbody>
       </table>
     </div>

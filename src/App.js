@@ -10,6 +10,21 @@ import Table from "./Table";
 
 function App() {
 
+  const [logStatus, setLogStatus] = useState(false);
+  const [itemDel, setItemDel] = useState(false);
+
+
+  const changeStatus = () => {
+    setLogStatus(true);
+    console.log("log status iz appa " + logStatus);
+  }
+
+  const wasDeleted = () => {
+    setItemDel(true);
+  }
+
+  
+
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   // useEffect(() => {
@@ -33,14 +48,14 @@ function App() {
   // };
 
   return (
-    <Context.Provider value={{ isLoggedIn: false, picturesData: [] }}>
+    <Context.Provider value={{ isLoggedIn: logStatus, picturesData: [], delStatus: itemDel }}>
       <div className="container">
         <RegForm />
         <br />
-        <LoginForm />
+        <LoginForm changeSt={changeStatus}/>
         <br />
         <Find />
-        <Table />
+        <Table itemDel={wasDeleted}/>
       </div>
     </Context.Provider>
   );

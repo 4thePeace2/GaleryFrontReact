@@ -34,11 +34,17 @@ const LoginForm = (props) => {
       body: data1,
     });
     const data = await response.json();
+    // console.log(ctx.token);
+    localStorage.setItem("token", data.access_token);
     console.log(data);
+    // ctx.token = data.access_token;
+    // console.log(ctx.token);
     console.log(ctx.isLoggedIn);
+    props.changeSt();
 
     if (data) {
       ctx.isLoggedIn = true;
+      // ctx.token = 
       console.log(ctx.isLoggedIn);
     }
     setEnteredEmail("");

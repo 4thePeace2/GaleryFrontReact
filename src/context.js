@@ -2,7 +2,9 @@ import React from 'react';
 
 const Context = React.createContext({
     isLoggedIn: false,
-    picturesData: []
+    token: "",
+    picturesData: [],
+    delStatus: false
 });
 
 export default Context;
