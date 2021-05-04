@@ -14,6 +14,8 @@ function App() {
 
   const [logStatus, setLogStatus] = useState(false);
   const [picturesData, setPictureData] = useState([]);
+  // const [validInputs, setValidInputs] = useState(true);
+
 
   const changeStatus = () => {
     setLogStatus(!logStatus);
@@ -30,6 +32,9 @@ function App() {
   const pictureDataChanged = () => {
     setPictureData([]);
   }
+  // const validInputsChecker = () => {
+  //   setValidInputs(false);
+  // }
   
 
   return (
@@ -54,9 +59,10 @@ function App() {
         {logStatus && <Find foundItems={sendItems} />}
 
         <Table itemsToDisplay={picturesData} itemIsDeleted={pictureDataChanged}/>
-      </Context.Provider>
+      
       <br />
-      {logStatus && <AddingForm newPicture={pictureDataChanged}/> }
+      {logStatus && <AddingForm newPicture={pictureDataChanged} /> }
+      </Context.Provider>
     </div>
   );
 }

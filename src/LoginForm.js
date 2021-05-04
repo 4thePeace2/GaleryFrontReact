@@ -24,6 +24,10 @@ const LoginForm = (props) => {
       body: data1,
     });
     const data = await response.json();
+    if (data.error) {
+      alert("invalid username and/or password!");
+      return;
+    }
     localStorage.setItem("token", data.access_token);
     console.log(data);
     ctx.user = data.userName;

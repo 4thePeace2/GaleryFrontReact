@@ -40,9 +40,9 @@ const Galleries = (props) => {
       }
 
     return(
-        <select onChange={changeGalleryHandler} value='1'  className="col-sm-4">
+        <select onChange={changeGalleryHandler} className="col-sm-4 bg-transparent">
             {galleries.map((item) => (
-                <option key={item.Id} value={item.OrgId} >{item.Name}</option>
+                <option key={item.Id} value={item.OrgId} selected={item.OrgId === 1} >{item.Name}</option>
             ))}
         </select>
     )

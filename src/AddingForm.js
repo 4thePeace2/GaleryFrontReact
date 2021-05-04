@@ -1,19 +1,28 @@
 import React, { useState } from "react";
 import Galleries from "./Galleries";
+// import Context from "./context";
+
 
 const AddingForm = (props) => {
+  // const ctx = useContext(Context);
+
   const [gallery, setGallery] = useState(1);
   const [name, setName] = useState("");
   const [author, setAuthor] = useState("");
   const [year, setYear] = useState("");
   const [price, setPrice] = useState("");
+  
 
   const GalleryChangeHandler = (value) => {
     setGallery(value);
   };
 
   const nameChangeHandler = (event) => {
-    setName(event.target.value);
+    
+
+      setName(event.target.value);
+    
+    
   };
 
   const authorChangeHandler = (event) => {
@@ -27,6 +36,7 @@ const AddingForm = (props) => {
   const priceChangeHandler = (event) => {
     setPrice(event.target.value);
   };
+  // var nameIsValid = true;
 
   const postRequest = async (data) => {
     var tokenSt = localStorage.getItem("token");
@@ -47,6 +57,12 @@ const AddingForm = (props) => {
   const submitHandler = (event) => {
     event.preventDefault();
 
+    // if (name.trim().length === 0 || name.trim().length > 120) {
+      
+    //   console.log("validacija nije prosla!")
+    //   ctx.validation = false;
+    // } else {
+    //   ctx.validation = true;
     var sendData = {
       GaleryId: gallery,
       Name: name,
@@ -71,6 +87,7 @@ const AddingForm = (props) => {
     setAuthor("");
     setYear("");
     setPrice("");
+    // }
   };
 
   const cancelHandler = () => {
@@ -97,6 +114,7 @@ const AddingForm = (props) => {
         value={name}
         onChange={nameChangeHandler}
       />
+      {/* {!ctx.validation && <p>Name field can't be empty or longer then 120 caracters!</p>} */}
       <br />
       <label className="col-sm-2" htmlFor="author">
         <strong>Author</strong>
@@ -149,7 +167,9 @@ const AddingForm = (props) => {
         >
           Cancel
         </button>
+        
       </div>
+      <br />
     </div>
   );
 };

@@ -34,6 +34,8 @@ const RegForm = (props) => {
     if (data.status === 200) {
       alert("Registration was successful!");
       props.isCanceled();
+    } else {
+      alert("Enter valid mail address, password should be at least 8 caracters long and to contain at least one Upper case, lowercase, number and special caracter!");
     }
   }
 

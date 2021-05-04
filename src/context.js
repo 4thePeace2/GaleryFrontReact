@@ -5,6 +5,7 @@ const Context = React.createContext({
     token: "",
     picturesData: [],
     user: "",
+    // validation: true,
 });
 
 export default Context;
